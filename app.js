@@ -44,6 +44,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use("/session", require("./routers/session"));
+app.use("/mongo", require("./routers/mongo"));
+
 app.post("/api/login", function(req, res) {
     if (chatSocketMap.get(req.body.userId)) {
         res.json({ code: "error", message: "该id已存在，请更改id！" });
