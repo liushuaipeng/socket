@@ -40,6 +40,9 @@ app.use(
 );
 
 app.use(express.static("www"));
+// 解析 application/json
+app.use(bodyParser.json());
+// 解析 application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
