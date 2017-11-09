@@ -43,10 +43,20 @@ app.use(express.static("www"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+// 跨域处理
+app.use(function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    // res.header('Access-Control-Allow-Methods', 'GET, HEAD, POST, PUT, DELETE, OPTIONS');
+    // res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, AppKey, Nonce, CurTime, CheckSum');
+    // res.header('Access-Control-Max-Age', 604800);
+    // res.header('Access-Control-Allow-Credentials', true);
+    next();
+});
+
 app.use("/session", require("./routers/session"));
 app.use("/mongo", require("./routers/mongo"));
 
-app.post("/api/login", function(req, res) {
+app.post("/api/login", function (req, res) {
     if (chatSocketMap.get(req.body.userId)) {
         res.json({ code: "error", message: "该id已存在，请更改id！" });
     } else {
@@ -65,11 +75,11 @@ var socketIoChat = require("socket.io")(server, {
 });
 socketIoChat.sockets
     .on(
-        "connection",
-        socketioJwt.authorize({
-            secret: jwtSecret,
-            timeout: 15000
-        })
+    "connection",
+    socketioJwt.authorize({
+        secret: jwtSecret,
+        timeout: 15000
+    })
     )
     .on("authenticated", socket => {
         chatSocketMap.set(socket.decoded_token.userId, socket);
