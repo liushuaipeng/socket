@@ -8,6 +8,10 @@ router.get("/getdata", function (req, res) {
         var userArr = yield DBtest.test.findTestId();
         res.json({ code: '000000', message: '读取成功', data: { list: userArr } })
     })
+    
+    // DBtest.test.find(function (err, model) {
+    //     res.json({ code: '000000', message: '读取成功', data: { list: model } })
+    // })
 });
 
 router.post("/add", function (req, res) {
@@ -40,7 +44,7 @@ router.post("/add", function (req, res) {
         // new DBtest.test(req.body).save().then(model => {
         //     res.json({ code: "000000", message: "写入成功！", data: model });
         // });
-        var user = new DBtest.test(req.body).save();
+        var user = yield new DBtest.test(req.body).save();
         if (user) {
             res.json({ code: '000000', message: '写入成功', data: user })
         }

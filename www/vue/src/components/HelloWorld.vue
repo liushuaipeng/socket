@@ -16,25 +16,15 @@
                 </el-form-item>
             </el-form>
         </div>
-        <div class="list"> 
+        <div class="list">
             <el-table :data="tableData" style="width: 100%">
-                <el-table-column
-                    prop="name"
-                    label="名字"
-                    width="180">
+                <el-table-column prop="name" label="名字" width="180">
                 </el-table-column>
-                <el-table-column
-                    prop="nickname"
-                    label="昵称"
-                    width="180">
+                <el-table-column prop="nickname" label="昵称" width="180">
                 </el-table-column>
-                <el-table-column
-                    prop="phone"
-                    label="手机">
+                <el-table-column prop="phone" label="手机">
                 </el-table-column>
-                <el-table-column
-                    prop="Date"
-                    label="时间">
+                <el-table-column prop="Date" label="时间">
                 </el-table-column>
                 <el-table-column label="操作">
                     <template slot-scope="scope">
