@@ -100,24 +100,38 @@
             });
             socketChat.on('connect', function () {
                 socketChat
-                    .emit('authenticate', { token: token })
+                    .emit('authenticate', { token: token }) // 发送jwt
                     .on('authenticated', function () {
                         console.log('连接成功');
+                        // TODO？连接成功该干什么    
                     })
+                    // 接受消息
                     .on('message/receive', (res) => {
                         $('.recordChat_wrapper').append(craetHtml('other', res.msg, res.username, res.date));
                         $('.recordChat').scrollTop($('.recordChat_wrapper').height() - 300);
                     })
             })
         };
+        // 发送消息
         $(".send").click(function () {
             var msg = { msg: $('textarea').val(), toId: $('.toId').val() };
+            if (msg.toId == '') {
+                alert('请输入要发送的id');
+                return
+            }
             socketChat.emit('message/send', msg, function (res) {
                 $('textarea').val('');
                 $('.recordChat_wrapper').append(craetHtml('self', res.msg, res.username, res.date));
                 $('.recordChat').scrollTop($('.recordChat_wrapper').height() - 300);
             })
         })
+        // 绑定回车事件
+        $('textarea').keydown(function (e) {
+            if (e.keyCode == '13') {
+                $(".send").trigger('click');
+            }
+        })
+        // 修改发送用户时清空输入框
         $('.toId').change(function () {
             $('.recordChat_wrapper').html('');
         })
