@@ -41,8 +41,10 @@ app.use(
         // resave: 即使 session 没有被修改，也保存 session 值，默认为 true。
     })
 );
-
+// 静态文件总代理
 app.use(express.static("www"));
+// 图片
+app.use('/images', express.static('files/images'));
 // 解析 application/json
 app.use(bodyParser.json());
 // 解析 application/x-www-form-urlencoded
@@ -61,6 +63,7 @@ app.use(function (req, res, next) {
 
 app.use("/session", require("./routers/session"));
 app.use("/mongo", require("./routers/mongo"));
+app.use("/files", require("./routers/files"));
 
 app.post("/api/login", function (req, res) {
     if (chatSocketMap.get(req.body.userId)) {

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="file" accept="*" multiple>
+    <img src="" alt="" width="100">
+    <button>上传</button>
+    <script src="jquery.js"></script>
+    <script>
+        $('input').change(function () {
+            console.log(this);
+            var file = this.files[0];
+            $('img').attr('src', URL.createObjectURL(file))
+        });
+        $('button').click(function () {
+            var data = new FormData();
+            data.append('files', $('input')[0].files[0]);
+            console.log(data);
+            $.ajax({
+                type: "POST",
+                url: '/files/upload',
+                data: data,
+                contentType: false,
+                processData: false,
+                success: function (res) {
+                    console.log(res);
+                }
+            })
+        })
+    </script>
+</body>
+
+</html>
