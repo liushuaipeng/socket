@@ -12,7 +12,7 @@ router.post('/upload', (req, res, next) => {
         filename: function (req, file, callback) {
             var name = new Date().getDay()
             var random = Math.random()
-            callback(null, `${name + random}`)
+            callback(null, `${name + random + '.jpg'}`)
         }
     })
     var uploads = multer({ storage }).array('files', 6);
@@ -21,13 +21,15 @@ router.post('/upload', (req, res, next) => {
             return;
         }
         console.log(req.files[0]);
-        res.json({
-            code: '000000',
-            message: '上传成功！',
-            data: {
-                path: req.files[0].path
-            }
-        })
+        setTimeout(() => {
+            res.json({
+                code: '000000',
+                message: '上传成功！',
+                data: {
+                    path: req.files[0].path
+                }
+            })
+        }, 2000);
     })
 })
 
